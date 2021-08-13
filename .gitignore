@@ -89,3 +89,5 @@ essentia.egg-info
 tmp
 .idea
 cmake-build-*
+
+include
