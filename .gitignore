@@ -87,3 +87,7 @@ packaging/win32_3rdparty/include
 dist
 essentia.egg-info
 tmp
+.idea
+cmake-build-*
+
+include

@@ -20,8 +20,8 @@
 #ifndef ESSENTIA_STREAMINGALGORITHM_H
 #define ESSENTIA_STREAMINGALGORITHM_H
 
-#include "../configurable.h"
-#include "../threading.h"
+#include "configurable.h"
+#include "threading.h"
 #include "sourcebase.h"
 #include "sinkbase.h"
 
