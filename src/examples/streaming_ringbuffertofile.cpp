@@ -18,8 +18,8 @@
  */
 
 #include "algorithmfactory.h"
-#include "algorithms/io/ringbufferinput.h"
-#include "algorithms/io/ringbufferoutput.h"
+#include "../algorithms/io/ringbufferinput.h"
+#include "../algorithms/io/ringbufferoutput.h"
 #include "diskwriter.h"
 
 #ifdef WIN32
