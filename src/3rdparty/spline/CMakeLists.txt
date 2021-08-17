@@ -1,0 +1,1 @@
+project(spline LANGUAGES CXX)

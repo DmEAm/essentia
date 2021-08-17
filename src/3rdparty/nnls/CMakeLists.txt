@@ -1,0 +1,1 @@
+project(nnls LANGUAGES CXX)

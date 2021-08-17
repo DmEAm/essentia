@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.14)
 
-project("Essentia audio processing library" LANGUAGES CXX)
+project(Essentia LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 find_program(WAF waf ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -41,16 +43,3 @@ add_custom_command(OUTPUT ${WAF_BUILD_BINARY_DIR}
 add_custom_target(Configure${PROJECT_NAME} ALL
         DEPENDS ${WAF_BUILD_BINARY_DIR}
         COMMENT "Successfully configured ${PROJECT_NAME}")
-
-set(ESSENTIA_LINK_DIR ${WAF_BUILD_BINARY_DIR}/src CACHE INTERNAL "")
-set(ESSENTIA_LIB ${ESSENTIA_LINK_DIR}/libessentia.so CACHE INTERNAL "")
-
-add_custom_command(OUTPUT ${ESSENTIA_LIB}
-        COMMAND ${WAF}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        DEPENDS ${WAF_BUILD_BINARY_DIR}
-        COMMENT "Start build ${PROJECT_NAME} lib")
-
-add_custom_target(${PROJECT_NAME} ALL
-        DEPENDS ${ESSENTIA_LIB}
-        COMMENT "Successfully build ${PROJECT_NAME} lib")
