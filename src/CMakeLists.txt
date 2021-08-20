@@ -3,7 +3,7 @@ project(essentia LANGUAGES CXX)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
-find_package(Taglib REQUIRED)
+find_package(Taglib )
 find_package(FFTW REQUIRED)
 find_package(samplerate REQUIRED)
 

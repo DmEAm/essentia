@@ -91,3 +91,4 @@ tmp
 cmake-build-*
 
 include
+waf*

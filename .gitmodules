@@ -4,3 +4,6 @@
 [submodule "test/models"]
 	path = test/models
 	url = https://github.com/MTG/essentia-models
+[submodule "src/3rdparty/taglib"]
+	path = src/3rdparty/taglib
+	url = https://github.com/taglib/taglib.git

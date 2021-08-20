@@ -5,4 +5,5 @@ add_subdirectory(spline)
 add_subdirectory(nnls)
 add_subdirectory(cephes)
 add_subdirectory(tensorflow)
+add_subdirectory(taglib)
 
