@@ -1,1 +1,21 @@
 project(tensorflow LANGUAGES CXX)
+
+include(ExternalProject)
+
+set(TENSORFLOW_URL https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.5.0.tar.gz)
+
+ExternalProject_Add(TensorflowExternal
+    URL ${TENSORFLOW_URL}
+    STAMP_DIR ${CMAKE_CURRENT_BINARY_DIR}
+    SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}
+    PREFIX ${CMAKE_CURRENT_BINARY_DIR}
+    BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    UPDATE_COMMAND ""
+    INSTALL_COMMAND "")
+
+set(TENSORFLOW_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/include CACHE INTERNAL "")
+set(TENSORFLOW_LINK_DIR ${CMAKE_CURRENT_BINARY_DIR}/lib CACHE INTERNAL "")
+
+add_library(${PROJECT_NAME} STATIC IMPORTED)

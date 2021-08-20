@@ -1,1 +1,7 @@
 project(spline LANGUAGES CXX)
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+file(GLOB SOURCE_FILES *.cpp *.h)
+
+add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})

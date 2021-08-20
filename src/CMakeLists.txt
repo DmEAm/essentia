@@ -5,6 +5,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(Taglib REQUIRED)
 find_package(FFTW REQUIRED)
+find_package(samplerate REQUIRED)
 
 find_path(AVCODEC_INCLUDE_DIR libavcodec/avcodec.h)
 
@@ -24,8 +25,8 @@ include_directories(3rdparty)
 file(GLOB_RECURSE SOURCE_FILES ${PROJECT_SOURCE_DIR} essentia/*.cpp algorithms/*.cpp)
 file(GLOB_RECURSE HEADER_FILES ${PROJECT_SOURCE_DIR} essentia/*.h algorithms/*.h)
 
-list(FILTER SOURCE_FILES EXCLUDE REGEX "gaia*")
-list(FILTER HEADER_FILES EXCLUDE REGEX "gaia*")
+list(FILTER SOURCE_FILES EXCLUDE REGEX "gaia.*")
+list(FILTER HEADER_FILES EXCLUDE REGEX "gaia.*")
 
 if(NOT APPLE)
     list(FILTER SOURCE_FILES EXCLUDE REGEX ".*fft[ka].*")
@@ -55,12 +56,20 @@ set(PROJECT_SOURCES ${SOURCE_FILES} ${HEADER_FILES})
 
 add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES})
 
+add_dependencies(${PROJECT_NAME} TensorflowExternal)
+
 target_link_libraries(${PROJECT_NAME}
+        tensorflow
+        nnls
+        spline
+        cephes
         Eigen3::Eigen
+        samplerate::samplerate
         ${AV_LIBRARIES}
         ${YAML_CPP_LIBRARIES}
         ${TAGLIB_LIBRARIES}
         ${FFTW_LIBRARIES}
         ${YAML_LIBRARY})
 
+target_link_directories(${PROJECT_NAME} PUBLIC ${TENSORFLOW_LINK_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${AVCODEC_INCLUDE_DIR})
