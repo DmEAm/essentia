@@ -7,3 +7,9 @@
 [submodule "src/3rdparty/taglib"]
 	path = src/3rdparty/taglib
 	url = https://github.com/taglib/taglib.git
+[submodule "src/3rdparty/samplerate"]
+	path = src/3rdparty/samplerate
+	url = https://github.com/libsndfile/libsamplerate.git
+[submodule "src/3rdparty/yaml"]
+	path = src/3rdparty/yaml
+	url = https://github.com/yaml/libyaml.git

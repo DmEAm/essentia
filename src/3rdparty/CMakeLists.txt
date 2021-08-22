@@ -6,4 +6,5 @@ add_subdirectory(nnls)
 add_subdirectory(cephes)
 add_subdirectory(tensorflow)
 add_subdirectory(taglib)
-
+add_subdirectory(samplerate)
+add_subdirectory(yaml)

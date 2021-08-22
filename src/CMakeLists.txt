@@ -3,9 +3,9 @@ project(essentia LANGUAGES CXX)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
-find_package(Taglib )
+find_package(Taglib)
 find_package(FFTW REQUIRED)
-find_package(samplerate REQUIRED)
+find_package(samplerate)
 
 find_path(AVCODEC_INCLUDE_DIR libavcodec/avcodec.h)
 
@@ -13,8 +13,20 @@ find_library(AVCODEC_LIBRARY avcodec REQUIRED)
 find_library(AVFORMAT_LIBRARY avformat REQUIRED)
 find_library(AVRESAMPLE_LIBRARY avresample REQUIRED)
 
-find_library(YAML_LIBRARY yaml REQUIRED)
-find_package(yaml-cpp)
+find_library(YAML_LIBRARY yaml)
+
+if(NOT YAML_LIBRARY)
+    set(YAML_LIBRARY yaml)
+endif()
+
+if(NOT TAGLIB_FOUND)
+    set(TAGLIB_LIBRARIES tag)
+    set(TAGLIB_INCLUDES ${tag_SOURCE_DIR}/taglib)
+endif()
+
+if(NOT SAMPLERATE_FOUND)
+    set(SAMPLERATE_LIBRARY samplerate)
+endif()
 
 set(AV_LIBRARIES ${AVCODEC_LIBRARY} ${AVFORMAT_LIBRARY} ${AVRESAMPLE_LIBRARY})
 
@@ -64,9 +76,8 @@ target_link_libraries(${PROJECT_NAME}
         spline
         cephes
         Eigen3::Eigen
-        samplerate::samplerate
+        ${SAMPLERATE_LIBRARY}
         ${AV_LIBRARIES}
-        ${YAML_CPP_LIBRARIES}
         ${TAGLIB_LIBRARIES}
         ${FFTW_LIBRARIES}
         ${YAML_LIBRARY})

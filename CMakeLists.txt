@@ -10,7 +10,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 find_program(WAF waf ${CMAKE_CURRENT_SOURCE_DIR})
 
-find_package(Python3 COMPONENTS Interpreter REQUIRED)
+find_package(Python2 COMPONENTS Interpreter REQUIRED)
 
 set(ESSENTIA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "")
 
@@ -38,10 +38,12 @@ set(WAF_BUILD_BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 string(TOLOWER ${CMAKE_BUILD_TYPE} BUILD_TYPE)
 add_custom_command(OUTPUT ${WAF_BUILD_BINARY_DIR}
-        COMMAND ${Python3_EXECUTABLE} ${WAF} -j 2 configure --fft --mode=${BUILD_TYPE}
+        COMMAND ${Python2_EXECUTABLE} ${WAF} -j 2 configure --fft --mode=${BUILD_TYPE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         COMMENT "Configure essentia project with waf build system")
 
 add_custom_target(Configure${PROJECT_NAME} ALL
         DEPENDS ${WAF_BUILD_BINARY_DIR}
         COMMENT "Successfully configured ${PROJECT_NAME}")
+
+add_dependencies(essentia Configure${PROJECT_NAME})

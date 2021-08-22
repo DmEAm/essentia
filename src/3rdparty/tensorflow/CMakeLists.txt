@@ -1,14 +1,19 @@
-project(tensorflow LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.11)
+
+project(tensorflow VERSION 2.5.0 LANGUAGES C)
 
 include(ExternalProject)
 
-set(TENSORFLOW_URL https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.5.0.tar.gz)
+set(TENSORFLOW_URL https://storage.googleapis.com/tensorflow/libtensorflow)
+
+if(WIN32)
+    set(TENSORFLOW_URL ${TENSORFLOW_URL}/libtensorflow-cpu-windows-x86_64-${CMAKE_PROJECT_VERSION}.zip)
+else()
+    set(TENSORFLOW_URL ${TENSORFLOW_URL}/libtensorflow-cpu-linux-x86_64-${CMAKE_PROJECT_VERSION}.tar.gz)
+endif()
 
 ExternalProject_Add(TensorflowExternal
     URL ${TENSORFLOW_URL}
-    STAMP_DIR ${CMAKE_CURRENT_BINARY_DIR}
-    SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}
-    PREFIX ${CMAKE_CURRENT_BINARY_DIR}
     BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
