@@ -8,6 +8,7 @@ find_package(FFTW REQUIRED)
 find_package(samplerate)
 
 find_path(AVCODEC_INCLUDE_DIR libavcodec/avcodec.h)
+find_path(CHROMAPRINT_INCLUDE_DIR chromaprint.h REQUIRED)
 
 find_library(AVCODEC_LIBRARY avcodec REQUIRED)
 find_library(AVFORMAT_LIBRARY avformat REQUIRED)
@@ -32,6 +33,7 @@ set(AV_LIBRARIES ${AVCODEC_LIBRARY} ${AVFORMAT_LIBRARY} ${AVRESAMPLE_LIBRARY})
 
 add_subdirectory(3rdparty)
 include_directories(3rdparty)
+include_directories(${CMAKE_INCLUDE_PATH})
 #add_subdirectory(algorithms)
 
 file(GLOB_RECURSE SOURCE_FILES ${PROJECT_SOURCE_DIR} essentia/*.cpp algorithms/*.cpp)
@@ -46,6 +48,7 @@ if(NOT APPLE)
 endif()
 
 include_directories(
+    ${CHROMAPRINT_INCLUDE_DIR}
     ${FFTW_INCLUDE_DIRS}
     ${TAGLIB_INCLUDES}
     ${vamp-sdk_SOURCE_DIR}
@@ -82,5 +85,5 @@ target_link_libraries(${PROJECT_NAME}
         ${FFTW_LIBRARIES}
         ${YAML_LIBRARY})
 
-target_link_directories(${PROJECT_NAME} PUBLIC ${TENSORFLOW_LINK_DIR})
+target_link_directories(${PROJECT_NAME} PUBLIC ${TENSORFLOW_LINK_DIR} ${CMAKE_LIBRARY_PATH})
 target_include_directories(${PROJECT_NAME} PRIVATE ${AVCODEC_INCLUDE_DIR})
