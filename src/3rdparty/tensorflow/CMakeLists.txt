@@ -14,6 +14,7 @@ endif()
 
 ExternalProject_Add(TensorflowExternal
     URL ${TENSORFLOW_URL}
+    BUILD_ALWAYS OFF
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     UPDATE_COMMAND ""

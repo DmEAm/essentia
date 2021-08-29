@@ -12,7 +12,7 @@ find_program(WAF waf ${CMAKE_CURRENT_SOURCE_DIR})
 
 find_package(Python2 COMPONENTS Interpreter REQUIRED)
 
-set(ESSENTIA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "")
+set(ESSENTIA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 file(GLOB_RECURSE HEADER_FILES src/essentia/*.h src/algorithms/*.h src/version.h)
 
