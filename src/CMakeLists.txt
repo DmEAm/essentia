@@ -18,9 +18,9 @@ find_library(YAML_LIBRARY yaml)
 set(AV_LIBRARIES ${AVCODEC_LIBRARY} ${AVFORMAT_LIBRARY} ${AVRESAMPLE_LIBRARY})
 
 add_subdirectory(3rdparty)
+add_subdirectory(examples)
+
 include_directories(3rdparty)
-include_directories(${CMAKE_INCLUDE_PATH})
-#add_subdirectory(algorithms)
 
 file(GLOB_RECURSE SOURCE_FILES ${PROJECT_SOURCE_DIR} essentia/*.cpp algorithms/*.cpp)
 file(GLOB_RECURSE HEADER_FILES ${PROJECT_SOURCE_DIR} essentia/*.h algorithms/*.h)
@@ -72,4 +72,3 @@ target_link_libraries(${PROJECT_NAME}
         ${YAML_LIBRARY})
 
 target_link_directories(${PROJECT_NAME} PUBLIC ${TENSORFLOW_LINK_DIR} ${CMAKE_LIBRARY_PATH})
-target_include_directories(${PROJECT_NAME} PRIVATE ${AVCODEC_INCLUDE_DIR})
