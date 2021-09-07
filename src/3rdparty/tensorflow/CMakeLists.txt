@@ -5,11 +5,12 @@ project(tensorflow VERSION 2.5.0 LANGUAGES C)
 include(ExternalProject)
 
 set(TENSORFLOW_URL https://storage.googleapis.com/tensorflow/libtensorflow)
+set(TENSORFLOW_VERSION ${CMAKE_PROJECT_VERSION} CACHE STRING "Tensorflow version")
 
 if(WIN32)
-    set(TENSORFLOW_URL ${TENSORFLOW_URL}/libtensorflow-cpu-windows-x86_64-${CMAKE_PROJECT_VERSION}.zip)
+    set(TENSORFLOW_URL ${TENSORFLOW_URL}/libtensorflow-cpu-windows-x86_64-${TENSORFLOW_VERSION}.zip)
 else()
-    set(TENSORFLOW_URL ${TENSORFLOW_URL}/libtensorflow-cpu-linux-x86_64-${CMAKE_PROJECT_VERSION}.tar.gz)
+    set(TENSORFLOW_URL ${TENSORFLOW_URL}/libtensorflow-cpu-linux-x86_64-${TENSORFLOW_VERSION}.tar.gz)
 endif()
 
 ExternalProject_Add(TensorflowExternal
@@ -26,5 +27,4 @@ set(TENSORFLOW_LINK_DIR ${SOURCE_DIR}/lib CACHE INTERNAL "")
 
 add_library(${PROJECT_NAME} STATIC IMPORTED)
 
-include_directories(${TENSORFLOW_INCLUDE_DIR})
-link_directories(${TENSORFLOW_LINK_DIR})
+add_dependencies(${PROJECT_NAME} TensorflowExternal)

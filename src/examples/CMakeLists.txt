@@ -9,3 +9,5 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_executable(OnSetDetector onset_detector.cpp)
 
 target_link_libraries(OnSetDetector PRIVATE essentia)
+
+include_directories(${ESSENTIA_INCLUDE_DIR})
