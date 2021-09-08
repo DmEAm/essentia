@@ -107,6 +107,7 @@ if (NOT FFMPEG_LIBRARIES)
     find_component(SWSCALE    libswscale    swscale  libswscale/swscale.h)
     find_component(POSTPROC   libpostproc   postproc libpostproc/postprocess.h)
     find_component(SWRESAMPLE libswresample swresample libswresample/swresample.h)
+    find_component(AVRESAMPLE libavresample avresample libavresample/avresample.h)
 
     # Check if the required components were found and add their stuff to the FFMPEG_* vars.
     foreach (_component ${FFmpeg_FIND_COMPONENTS})

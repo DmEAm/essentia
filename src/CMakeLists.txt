@@ -8,7 +8,7 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(Taglib REQUIRED)
 find_package(FFTW REQUIRED)
 find_package(samplerate REQUIRED)
-find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT REQUIRED)
+find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT AVRESAMPLE REQUIRED)
 find_package(Yaml REQUIRED)
 find_package(chromaprint REQUIRED)
 
