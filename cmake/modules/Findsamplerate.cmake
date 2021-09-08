@@ -31,8 +31,9 @@
 # - Visual Studio
 
 # Use pkg-config to find library locations in *NIX environments.
-find_package(PkgConfig QUIET)
-if(PKG_CONFIG_FOUND)
+if(NOT PKG_CONFIG_FOUND)
+    find_package(PkgConfig QUIET)
+else()
     pkg_search_module(PC_SAMPLERATE QUIET samplerate)
 endif()
 

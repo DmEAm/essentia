@@ -8,16 +8,9 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(Taglib REQUIRED)
 find_package(FFTW REQUIRED)
 find_package(samplerate REQUIRED)
-find_package(Yaml QUIET REQUIRED)
-
-find_path(AVCODEC_INCLUDE_DIR libavcodec/avcodec.h)
-find_path(CHROMAPRINT_INCLUDE_DIR chromaprint.h REQUIRED)
-
-find_library(AVCODEC_LIBRARY avcodec REQUIRED)
-find_library(AVFORMAT_LIBRARY avformat REQUIRED)
-find_library(AVRESAMPLE_LIBRARY avresample REQUIRED)
-
-set(AV_LIBRARIES ${AVCODEC_LIBRARY} ${AVFORMAT_LIBRARY} ${AVRESAMPLE_LIBRARY})
+find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT REQUIRED)
+find_package(Yaml REQUIRED)
+find_package(chromaprint REQUIRED)
 
 add_subdirectory(3rdparty)
 add_subdirectory(examples)
@@ -36,16 +29,6 @@ if(NOT APPLE)
     list(FILTER HEADER_FILES EXCLUDE REGEX ".*ffta[ka].*")
 endif()
 
-include_directories(
-    ${CHROMAPRINT_INCLUDE_DIR}
-    ${FFTW_INCLUDE_DIRS}
-    ${TAGLIB_INCLUDES}
-    ${vamp-sdk_SOURCE_DIR}
-    ${TENSORFLOW_INCLUDE_DIR}
-    ${spline_SOURCE_DIR}
-    ${nnls_SOURCE_DIR}
-    ${AVCODEC_INCLUDE_DIR})
-
 subdirectory_list(INCLUDE_DIRS ${ESSENTIA_SOURCE_DIR} RECURSIVE)
 list(APPEND INCLUDE_DIRS ${ESSENTIA_SOURCE_DIR})
 
@@ -57,6 +40,16 @@ add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES})
 
 add_dependencies(${PROJECT_NAME} TensorflowExternal)
 
+target_include_directories(${PROJECT_NAME} PRIVATE
+        ${CHROMAPRINT_INCLUDE_DIR}
+        ${FFTW_INCLUDE_DIRS}
+        ${TAGLIB_INCLUDES}
+        ${vamp-sdk_SOURCE_DIR}
+        ${TENSORFLOW_INCLUDE_DIR}
+        ${spline_SOURCE_DIR}
+        ${nnls_SOURCE_DIR}
+        ${FFMPEG_INCLUDE_DIRS})
+
 target_link_libraries(${PROJECT_NAME}
         tensorflow
         nnls
@@ -64,9 +57,10 @@ target_link_libraries(${PROJECT_NAME}
         cephes
         Eigen3::Eigen
         ${SAMPLERATE_LIBRARY}
-        ${AV_LIBRARIES}
+        ${CHROMAPRINT_LIBRARIES}
+        ${FFMPEG_LIBRARIES}
         ${TAGLIB_LIBRARIES}
         ${FFTW_LIBRARIES}
-        ${YAML_LIBRARY})
+        ${YAML_LIBRARIES})
 
 target_link_directories(${PROJECT_NAME} PUBLIC ${TENSORFLOW_LINK_DIR} ${CMAKE_LIBRARY_PATH})
