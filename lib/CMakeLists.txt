@@ -21,22 +21,17 @@ set(SAMPLERATE_URL https://github.com/libsndfile/libsamplerate/archive/refs/tags
 ExternalProject_Add(Samplerate URL ${SAMPLERATE_URL})
 
 find_program(BASH_PROGRAM NAMES bash)
-set(FFMPEG_VERSION 3.4.8 CACHE STRING "FFmpeg version")
-set(FFMPEG_URL https://www.ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.xz)
-set(FFMPEG_SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/ffmpeg)
+set(LIBAV_VERSION 12.3 CACHE STRING "FFmpeg version")
+set(LIBAV_URL https://libav.org/releases/libav-${LIBAV_VERSION}.tar.xz)
+ExternalProject_Add(Av URL ${LIBAV_URL}
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND "")
 
-message(STATUS "${BASH_PROGRAM} ${FFMPEG_SOURCE_DIR}/configure --cc=${CMAKE_C_COMPILER} --cxx=${CMAKE_CXX_COMPILER} --disable-x86asm")
-get_filename_component(FFMPEG_PREFIX ${CMAKE_CXX_COMPILER} DIRECTORY)
-ExternalProject_Add(FFmpeg
-    URL ${FFMPEG_URL}
-    LOG_CONFIGURE ON
-    LOG_BUILD ON
-    LOG_INSTALL ON
-    SOURCE_DIR ${FFMPEG_SOURCE_DIR}
-    BINARY_DIR ${FFMPEG_SOURCE_DIR}
-    CONFIGURE_COMMAND  bash configure --enable-shared
-        BUILD_COMMAND ${CMAKE_MAKE_PROGRAM}
-    INSTALL_COMMAND ${CMAKE_MAKE_PROGRAM} install)
+set(YAML_VERSION 0.2.5 CACHE STRING "Yaml version")
+set(YAML_URL https://github.com/yaml/libyaml)
+ExternalProject_Add(Yaml GIT_REPOSITORY ${YAML_URL} GIT_PROGRESS ON GIT_TAG ${YAML_VERSION})
 
-message(STATUS ${CMAKE_MSVCIDE_RUN_PATH})
-
+set(CHROMAPRINT_VERSION v1.5.0 CACHE STRING "Chromaprint version")
+set(CHROMAPRINT_URL https://github.com/acoustid/chromaprint.git)
+ExternalProject_Add(Chromaprint GIT_REPOSITORY ${CHROMAPRINT_URL} GIT_PROGRESS ON GIT_TAG ${CHROMAPRINT_VERSION})
