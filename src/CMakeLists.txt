@@ -42,6 +42,8 @@ add_dependencies(${PROJECT_NAME} TensorflowExternal)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         ${CHROMAPRINT_INCLUDE_DIR}
+        ${SAMPLERATE_INCLUDE_DIR}
+        ${YAML_INCLUDES}
         ${FFTW_INCLUDE_DIRS}
         ${TAGLIB_INCLUDES}
         ${vamp-sdk_SOURCE_DIR}
@@ -63,4 +65,5 @@ target_link_libraries(${PROJECT_NAME}
         ${FFTW_LIBRARIES}
         ${YAML_LIBRARIES})
 
+message(STATUS ${TAGLIB_LIBRARIES})
 target_link_directories(${PROJECT_NAME} PUBLIC ${TENSORFLOW_LINK_DIR} ${CMAKE_LIBRARY_PATH})
