@@ -10,7 +10,7 @@ find_package(FFTW REQUIRED)
 find_package(samplerate REQUIRED)
 find_package(Yaml REQUIRED)
 find_package(chromaprint REQUIRED)
-find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT AVRESAMPLE REQUIRED)
+find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT AVRESAMPLE AVUTIL REQUIRED)
 
 add_subdirectory(3rdparty)
 add_subdirectory(examples)
@@ -65,5 +65,5 @@ target_link_libraries(${PROJECT_NAME}
         ${FFTW_LIBRARIES}
         ${YAML_LIBRARIES})
 
-message(STATUS ${FFTW_LIBRARIES})
+message(STATUS ${FFMPEG_LIBRARIES})
 target_link_directories(${PROJECT_NAME} PUBLIC ${TENSORFLOW_LINK_DIR} ${CMAKE_LIBRARY_PATH})
