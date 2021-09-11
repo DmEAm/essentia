@@ -3,14 +3,21 @@ cmake_minimum_required(VERSION 3.11)
 project(EssentiaDependencies)
 
 include(ExternalProject)
+set(ZLIB_VERSION v1.2.11 CACHE STRING "ZLib version")
+set(ZLIB_URL https://github.com/madler/zlib.git)
+ExternalProject_Add(ZLib GIT_REPOSITORY ${ZLIB_URL} GIT_PROGRESS ON GIT_TAG ${ZLIB_VERSION})
 
 set(TAGLIB_VERSION 1.12 CACHE STRING "Taglib version")
 set(TAGLIB_URL https://taglib.org/releases/taglib-${TAGLIB_VERSION}.tar.gz)
-ExternalProject_Add(Taglib URL ${TAGLIB_URL} CMAKE_ARGS -DBUILD_SHARED_LIBS=ON)
+ExternalProject_Add(Taglib
+        URL ${TAGLIB_URL}
+        CMAKE_ARGS "-DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=ON")
 
 set(FFTW_VERSION 3.3.9 CACHE STRING "FFTW version")
 set(FFTW_URL http://www.fftw.org/fftw-${FFTW_VERSION}.tar.gz)
-ExternalProject_Add(FFTW URL ${FFTW_URL})
+ExternalProject_Add(FFTW
+        URL ${FFTW_URL}
+        CMAKE_ARGS "-DENABLE_FLOAT=ON -DENABLE_LONG_DOUBLE=ON -DENABLE_QUAD_PRECISION=ON -DBUILD_TESTS=OFF")
 
 set(EIGEN_VERSION 3.4.0 CACHE STRING "Eigen version")
 set(EIGEN_URL https://gitlab.com/libeigen/eigen/-/archive/${EIGEN_VERSION}/eigen-${EIGEN_VERSION}.zip)

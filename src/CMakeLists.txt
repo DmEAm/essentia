@@ -65,5 +65,5 @@ target_link_libraries(${PROJECT_NAME}
         ${FFTW_LIBRARIES}
         ${YAML_LIBRARIES})
 
-message(STATUS ${TAGLIB_LIBRARIES})
+message(STATUS ${FFTW_LIBRARIES})
 target_link_directories(${PROJECT_NAME} PUBLIC ${TENSORFLOW_LINK_DIR} ${CMAKE_LIBRARY_PATH})
