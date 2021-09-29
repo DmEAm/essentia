@@ -67,4 +67,4 @@ target_link_libraries(${PROJECT_NAME}
         ${FFTW_LIBRARIES}
         ${YAML_LIBRARIES})
 
-target_link_directories(${PROJECT_NAME} PUBLIC ${TENSORFLOW_LINK_DIR} ${CMAKE_LIBRARY_PATH})
+target_link_directories(${PROJECT_NAME} PUBLIC ${CMAKE_LIBRARY_PATH})

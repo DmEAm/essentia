@@ -25,6 +25,18 @@ ExternalProject_Get_property(TensorflowExternal SOURCE_DIR)
 set(TENSORFLOW_INCLUDE_DIR ${SOURCE_DIR}/include CACHE INTERNAL "")
 set(TENSORFLOW_LINK_DIR ${SOURCE_DIR}/lib CACHE INTERNAL "")
 
-add_library(${PROJECT_NAME} STATIC IMPORTED)
+add_library(${PROJECT_NAME} STATIC IMPORTED GLOBAL)
+
+find_library(TENSORFLOW_LIB NAMES tensorflow HINTS ${TENSORFLOW_LINK_DIR})
+if(WIN32)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+            IMPORTED_LOCATION "${TENSORFLOW_LINK_DIR}/tensorflow.dll"
+            IMPORTED_IMPLIB "${TENSORFLOW_LINK_DIR}/tensorflow.lib")
+else()
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+            IMPORTED_LOCATION ${TENSORFLOW_LIB})
+endif()
+
+set_target_properties(${PROJECT_NAME} PROPERTIES IMPORTED_CONFIGURATIONS "RELEASE")
 
 add_dependencies(${PROJECT_NAME} TensorflowExternal)
