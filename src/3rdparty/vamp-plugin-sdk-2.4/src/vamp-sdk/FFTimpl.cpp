@@ -1,4 +1,6 @@
 
+#include <cmath>
+
 /* Public domain FFT implementation from Don Cross. */
 
 static void

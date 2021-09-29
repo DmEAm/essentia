@@ -273,7 +273,7 @@ class ESSENTIA_API Parameter {
  * functions for adding new values in it: add() with or without a
  * default value.
  */
-class ParameterMap : public EssentiaMap<std::string, Parameter, string_cmp> {
+class ESSENTIA_API ParameterMap : public EssentiaMap<std::string, Parameter, string_cmp> {
 
  protected:
   typedef EssentiaMap<std::string, Parameter, string_cmp> ParameterMapBase;

@@ -39,7 +39,7 @@ bool _initialized;
 /**
  * Initialize Essentia and fill the AlgorithmFactories with the Algorithms.
  */
-void init() {
+ESSENTIA_API void init() {
   setDebugLevel(EUser1 | EUser2);
 
   E_DEBUG(EFactory, "essentia::init()");
@@ -56,7 +56,7 @@ void init() {
 /**
  * Cleanup all resources allocated by Essentia.
  */
-void shutdown() {
+ESSENTIA_API void shutdown() {
   // Need to do this to keep essentia FFT "agnostic", and shouldn't the class destructor do that anyway?
   // fftwf_cleanup();
   standard::AlgorithmFactory::shutdown();
