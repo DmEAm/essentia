@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
@@ -37,12 +38,15 @@ install(TARGETS essentia nnls spline cephes
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-set(PREFIX ${essentia_INSTALL_PREFIX})
-set(VERSION ${essentia_VERSION})
+set(PREFIX ${CMAKE_INSTALL_PREFIX})
+set(VERSION ${CMAKE_PROJECT_VERSION})
 
 set(exec_prefix ${CMAKE_INSTALL_PREFIX})
 set(libdir ${CMAKE_INSTALL_FULL_LIBDIR})
 set(includedir ${CMAKE_INSTALL_FULL_INCLUDEDIR})
+set(INCLUDE_INSTALL_DIR include)
+set(LIB_INSTALL_DIR lib)
+set(SYSCONFIG_INSTALL_DIR etc/essentia CACHE STRING "")
 
 configure_file(essentia.pc.in essentia.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/essentia.pc
@@ -50,18 +54,34 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/essentia.pc
         COMPONENT Development)
 
 set(ESSENTIA_LIBRARIES "essentia::essentia")
-configure_file(essentiaConfig.cmake.in essentiaConfig.cmake @ONLY)
-configure_file(essentiaConfigVersion.cmake.in essentiaConfigVersion.cmake @ONLY)
+
+configure_package_config_file(essentiaConfig.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/essentiaConfig.cmake
+        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/essentia
+        PATH_VARS INCLUDE_INSTALL_DIR SYSCONFIG_INSTALL_DIR
+        NO_SET_AND_CHECK_MACRO
+        NO_CHECK_REQUIRED_COMPONENTS_MACRO)
+
+write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/essentiaConfigVersion.cmake
+        VERSION 1.0.0
+        COMPATIBILITY SameMajorVersion)
+
 install(FILES
         ${CMAKE_CURRENT_BINARY_DIR}/essentiaConfig.cmake
         ${CMAKE_CURRENT_BINARY_DIR}/essentiaConfigVersion.cmake
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/essentia
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake
         COMPONENT Development)
 
-export(TARGETS essentia nnls spline cephes NAMESPACE essentia:: FILE ${PROJECT_BINARY_DIR}/essentiaLibraryDepends.cmake)
+export(TARGETS essentia nnls spline cephes
+        NAMESPACE essentia::
+        FILE ${PROJECT_BINARY_DIR}/essentiaLibraryDepends.cmake)
+
+export(PACKAGE essentia)
+
 install(EXPORT essentiaLibraryDepends
         NAMESPACE essentia::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/essentia
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake
         COMPONENT Development)
 
 set(ESSENTIA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE STRING "Essentia include dir")
@@ -70,9 +90,12 @@ install(FILES src/version.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(DIRECTORY src/essentia
         DESTINATION include
         FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY src/algorithms
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.h")
 install(DIRECTORY src/essentia/utils
-        DESTINATION include/essentia
+        DESTINATION include
         FILES_MATCHING PATTERN "*.h")
 install(DIRECTORY src/essentia/streaming
-        DESTINATION include/essentia
+        DESTINATION include
         FILES_MATCHING PATTERN "*.h")

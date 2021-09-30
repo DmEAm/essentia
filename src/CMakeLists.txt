@@ -10,6 +10,7 @@ find_package(FFTW REQUIRED)
 find_package(samplerate REQUIRED)
 find_package(Yaml REQUIRED)
 find_package(chromaprint REQUIRED)
+find_package(Tensorflow REQUIRED)
 find_package(FFmpeg COMPONENTS AVCODEC AVFORMAT AVRESAMPLE AVUTIL REQUIRED)
 
 add_subdirectory(3rdparty)
@@ -40,8 +41,6 @@ set(PROJECT_SOURCES ${SOURCE_FILES} ${HEADER_FILES} ${ALG_SOURCE_FILES} ${ALG_HE
 
 add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES})
 
-add_dependencies(${PROJECT_NAME} TensorflowExternal)
-
 target_include_directories(${PROJECT_NAME} PRIVATE
         ${CHROMAPRINT_INCLUDE_DIR}
         ${SAMPLERATE_INCLUDE_DIR}
@@ -49,13 +48,13 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         ${FFTW_INCLUDE_DIRS}
         ${TAGLIB_INCLUDES}
         ${vamp-sdk_SOURCE_DIR}
-        ${TENSORFLOW_INCLUDE_DIR}
+        ${TENSORFLOW_INCLUDES}
         ${spline_SOURCE_DIR}
         ${nnls_SOURCE_DIR}
         ${FFMPEG_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
-        tensorflow
+        ${TENSORFLOW_LIBRARIES}
         nnls
         spline
         cephes
